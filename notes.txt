@@ -1,0 +1,16 @@
+three.js examples:
+interactive / points - maybe
+points / billboards - mostly done (might need tweaks)
+points / random - done except for color
+trails
+lines 
+lines / sphere
+particles / floor
+particles / random
+particles / sprites
+particles / waves - DONE
+
+Color range:
+Low		- 240/360 - 0.667
+Mid (true) 	- 284/360 - 0.789
+High		- 315/360 - 0.875
