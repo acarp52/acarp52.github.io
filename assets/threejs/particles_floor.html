@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js canvas - particles - random</title>
+		<title>three.js canvas - particles - floor</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -17,15 +17,17 @@
 	</head>
 	<body>
 
-		<script src="build/three.js"></script>
+		<script src="../../build/three.js"></script>
 
-		<script src="assets/js/renderers/Projector.js"></script>
-		<script src="assets/js/renderers/CanvasRenderer.js"></script>
-
+		<script src="../js/renderers/Projector.js"></script>
+		<script src="../js/renderers/CanvasRenderer.js"></script>
 
 		<script>
+			var SEPARATION = 100;
+			var AMOUNTX = 50;
+			var AMOUNTY = 50;
 			var container;
-			var camera, scene, renderer, group, particle;
+			var camera, scene, renderer, particle, group;
 			var mouseX = 0, mouseY = 0;
 			var windowHalfX = window.innerWidth / 2;
 			var windowHalfY = window.innerHeight / 2;
@@ -34,28 +36,22 @@
 			function init() {
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
-				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 3000 );
+				camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 10000 );
 				camera.position.z = 1000;
+				camera.position.y += 100;
 				scene = new THREE.Scene();
-				var PI2 = Math.PI * 2;
-				var program = function ( context ) {
-					context.beginPath();
-					context.arc( 0, 0, 0.5, 0, PI2, true );
-					context.fill();
-				};
+				var material = new THREE.SpriteMaterial();
 				group = new THREE.Group();
-				scene.add( group );
-				for ( var i = 0; i < 1000; i++ ) {
-					var material = new THREE.SpriteCanvasMaterial( {
-						color: Math.random() * 0x808008 + 0x808080,
-						program: program
-					} );
-					particle = new THREE.Sprite( material );
-					particle.position.x = Math.random() * 2000 - 1000;
-					particle.position.y = Math.random() * 2000 - 1000;
-					particle.position.z = Math.random() * 2000 - 1000;
-					particle.scale.x = particle.scale.y = Math.random() * 20 + 10;
-					group.add( particle );
+				scene.add( group )
+				for ( var ix = 0; ix < AMOUNTX; ix++ ) {
+					for ( var iy = 0; iy < AMOUNTY; iy++ ) {
+						particle = new THREE.Sprite( material );
+						particle.scale.y = 20;
+						particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+						particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
+						scene.add( particle );
+						group.add( particle );
+					}
 				}
 				renderer = new THREE.CanvasRenderer();
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -80,14 +76,14 @@
 				mouseY = event.clientY - windowHalfY;
 			}
 			function onDocumentTouchStart( event ) {
-				if ( event.touches.length === 1 ) {
+				if ( event.touches.length > 1 ) {
 					event.preventDefault();
 					mouseX = event.touches[ 0 ].pageX - windowHalfX;
 					mouseY = event.touches[ 0 ].pageY - windowHalfY;
 				}
 			}
 			function onDocumentTouchMove( event ) {
-				if ( event.touches.length === 1 ) {
+				if ( event.touches.length == 1 ) {
 					event.preventDefault();
 					mouseX = event.touches[ 0 ].pageX - windowHalfX;
 					mouseY = event.touches[ 0 ].pageY - windowHalfY;
@@ -99,11 +95,10 @@
 				render();
 			}
 			function render() {
-				camera.position.x += ( mouseX - camera.position.x ) * 0.05;
-				camera.position.y += ( - mouseY - camera.position.y ) * 0.05;
+				camera.position.x += ( mouseX - camera.position.x ) * .05;
+				camera.position.y += ( mouseY - camera.position.y ) * .05;
 				camera.lookAt( scene.position );
-				group.rotation.x += 0.001;
-				group.rotation.y += 0.002;
+				group.rotation.y += 0.0006;
 				renderer.render( scene, camera );
 			}
 		</script>

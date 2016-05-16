@@ -47,8 +47,23 @@
 
 			<!-- Main -->
 			
-			<iframe id="viewer" name="viewer" allowfullscreen="" onmousewheel="" src="particles_sprites.html"></iframe>
-			
+			<!--iframe id="viewer" name="viewer" allowfullscreen="" onmousewheel="" src="assets/threejs/0.html"></iframe-->
+			<iframe id="viewer" name="viewer" allowfullscreen="" onmousewheel="" src=""></iframe>
+
+				<!-- Script to pick random three.js file from my favorite examples -->
+				<script>
+					var files = ["lines.html","lines_sphere.html","particles_floor.html","particles_random.html","particles_sprites.html","particles_waves.html","points_random.html","trails.html"];
+					var viewer = document.getElementById("viewer");
+					viewer.src = randFile();
+					
+					function randFile(){
+						var index = Math.floor(Math.random()*files.length); 
+						console.log(files.index);
+						return "assets/threejs/" + files[index];
+					}
+					
+				</script>
+				
 			<div id="main">
 			
 				<!-- One -->

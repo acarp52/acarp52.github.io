@@ -20,9 +20,9 @@
 	<body>
 		<div id="container"></div>
 
-		<script src="build/three.js"></script>
+		<script src="../../build/three.js"></script>
 
-		<script src="assets/js/Detector.js"></script>
+		<script src="../js/Detector.js"></script>
 
 		<script type="x-shader/x-vertex" id="vertexshader">
 			attribute float size;
@@ -73,7 +73,7 @@
 				for ( var i = 0, l = vertices.length; i < l; i ++ ) {
 					vertex = vertices[ i ];
 					vertex.toArray( positions, i * 3 );
-					console.log(0.01 + 0.1 * ( i / l ));
+					//console.log(0.01 + 0.1 * ( i / l ));
 					color.setHSL( colorRange((0.01 + 0.1 * ( i / l )),0.667,0.875), 1.0, 0.5 )
 					color.toArray( colors, i * 3 );
 					sizes[ i ] = PARTICLE_SIZE * 0.5;
@@ -86,7 +86,7 @@
 				var material = new THREE.ShaderMaterial( {
 					uniforms: {
 						color:   { type: "c", value: new THREE.Color( 0xffffff ) },
-						texture: { type: "t", value: new THREE.TextureLoader().load( "assets/sprites/disc.png" ) }
+						texture: { type: "t", value: new THREE.TextureLoader().load( "../sprites/disc.png" ) }
 					},
 					vertexShader: document.getElementById( 'vertexshader' ).textContent,
 					fragmentShader: document.getElementById( 'fragmentshader' ).textContent,

@@ -21,9 +21,9 @@
 		</style>
 	</head>
 	<body>
-		<script src="build/three.js"></script>
+		<script src="../../build/three.js"></script>
 
-		<script src="assets/js/Detector.js"></script>
+		<script src="../js/Detector.js"></script>
 
 		<script>
 			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
@@ -130,9 +130,22 @@
 				for ( i = 0; i < materials.length; i ++ ) {
 					color = parameters[i][0];
 					h = ( 360 * ( color[0] + time ) % 360 ) / 360;
+					// TODO: Narrow color range
+					//var h2 = randColor(h, 240, 360)
 					materials[i].color.setHSL( h, color[1], color[2] );
 				}
 				renderer.render( scene, camera );
+			}
+			function randColor(val, max, min){
+				val = val*360;
+				console.log(val);
+				
+				var p = max-min+1;
+				var mod = (val-min)%p;
+				if(mod<0){
+					mod += p;
+				}
+				return (min+mod)/360;
 			}
 		</script>
 	</body>

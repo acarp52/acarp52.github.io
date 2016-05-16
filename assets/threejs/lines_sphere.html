@@ -17,10 +17,10 @@
 	</head>
 	<body>
 
-		<script src="build/three.js"></script>
+		<script src="../../build/three.js"></script>
 
-		<script src="assets/js/renderers/Projector.js"></script>
-		<script src="assets/js/renderers/CanvasRenderer.js"></script>
+		<script src="../js/renderers/Projector.js"></script>
+		<script src="../js/renderers/CanvasRenderer.js"></script>
 
 		<script>
 			var SCREEN_WIDTH = window.innerWidth,
@@ -31,7 +31,7 @@
 			SEPARATION = 200,
 			AMOUNTX = 10,
 			AMOUNTY = 10,
-			camera, scene, renderer;
+			camera, scene, renderer, group;
 			init();
 			animate();
 			function init() {
@@ -56,6 +56,8 @@
 						context.fill();
 					}
 				} );
+				group = new THREE.Group();
+				scene.add( group );
 				for ( var i = 0; i < 1000; i ++ ) {
 					particle = new THREE.Sprite( material );
 					particle.position.x = Math.random() * 2 - 1;
@@ -65,6 +67,7 @@
 					particle.position.multiplyScalar( Math.random() * 10 + 450 );
 					particle.scale.multiplyScalar( 2 );
 					scene.add( particle );
+					group.add( particle );
 				}
 				// lines
 				for (var i = 0; i < 300; i++) {
@@ -78,6 +81,7 @@
 					geometry.vertices.push( vertex2 );
 					var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: Math.random() } ) );
 					scene.add( line );
+					group.add( line );
 				}
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.addEventListener( 'touchstart', onDocumentTouchStart, false );
@@ -118,8 +122,10 @@
 			}
 			function render() {
 				camera.position.x += ( mouseX - camera.position.x ) * .05;
-				camera.position.y += ( - mouseY + 200 - camera.position.y ) * .05;
+				camera.position.y += ( mouseY + 200 - camera.position.y ) * .05;
 				camera.lookAt( scene.position );
+				group.rotation.x += 0.0005;
+				group.rotation.y -= 0.0005;
 				renderer.render( scene, camera );
 			}
 		</script>
