@@ -2582,6 +2582,26 @@
 		#main > section:first-child {
 			border-top: 0;
 		}
+ 
+    /*** For the three.js interactive section **
+    
+    @media (orientation: portrait) {
+      body {
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+      }
+    }
+    /* Turns off three.js section for mobile devices */
+    @media all and (min-width: 667px){
+        .mobilewarn{display:none;}
+    }
+    @media all and (max-width: 667px){
+        .threediv{display:none;}
+        .mobilewarn{display:block; font-style: italic; color: red;}
+    }
 		
 	#viewer {
 				background-position: top right;
